@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/shop.css" %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'shop:ProductList' %}">Main</a></li>
+                    {% if not user.is_active %}
+                        <li class="active"><a href="{% url 'user_shop:home' %}">Login</a></li>
+
+
+                        <li><a href="{% url 'user_shop:registration' %}">Registration</a></li>
+                    {% endif %}
+                    {% if user.is_active %}
+                        <li><a href="{% url 'user_shop:logout_request' %}">Logout({{ user.username }})</a></li>
+                        <li>{% if user.profile.image.url|length > 0 %}
+                                {% if user.profile.image != 'False' %}
+                                    <img style="max-width:10%" src="{{ user.profile.image.url }}" >
+                                 {% endif %}
+                             {% endif %}
+                        </li>
+
+                        <li><a href="{% url 'user_shop:profiler' %}">Profile</a></li>
+                    {% endif %}
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</nav>
+<section class="page-header">
+    <div class="container">
+        <div class="cart">
+            {% with total_items=cart|length %}
+                Ваша корзина:
+                <a href="{% url "cart:CartDetail" %}">
+                    {{ total_items }} тов. {{ total_items.get_total_price }} руб.
+                </a>
+            {% endwith %}
+        </div>
+    </div>
+</section>
+<section class="container main-content">
+    {% block content %}{% endblock %}
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

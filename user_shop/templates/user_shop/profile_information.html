@@ -1,0 +1,38 @@
+{% extends 'shop/base.html' %}
+{% load staticfiles %}
+
+{% block title %}User profile{% endblock %}
+
+{% block content %}
+
+{% for User in posts %}
+            <div class="post">
+            {% if forloop.first %}
+                <h2>Profile information {{ User.user.username }}</h2>
+                <br>
+            {% endif %}
+    <p>You Avatar</p>
+        {% if User.image.url|length > 0 %}
+            {% if User.image != 'False' %}
+                <img style="max-width:30%" src="{{ User.image.url }}" >
+            {% endif %}
+        {% endif %}
+
+    <br>
+    <p>Your Firstname   <h3>{{ User.first_name  }}</h3></p>
+    <br>
+    <p>Your Lastname <h3>{{ User.last_name  }}</h3></p>
+    <br>
+    <p>Your Midname <h3>{{ User.mid_name  }}</h3></p>
+    <br>
+    <p>Your Information <h3>{{ User.about  }}</h3></p>
+            <br>
+    <p>Your Email <h3>{{ User.email  }}</h3></p>
+            <br>
+    <p>Your Phone <h3>{{ User.phone_number  }}</h3></p>
+
+
+    </div>
+{% endfor %}
+
+{% endblock %}

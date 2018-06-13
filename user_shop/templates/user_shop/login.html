@@ -1,0 +1,13 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Login {% endblock %}
+
+{% block content %}
+<form margin="margin-right" action="login">
+    {{ form }}
+    <input class="btn btn-default" type="submit" value="Enter">
+</form>
+    <br>
+
+    <h4><a href="{% url 'shop:ProductList' %}?logout">Guest access</a></h4>
+{% endblock %}

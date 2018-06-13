@@ -1,0 +1,50 @@
+{% extends "shop/base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+{% block title %}
+  {{ product.name }}
+{% endblock %}
+{% block content %}
+    <div class="product-detail">
+        <div class="col-sm-4">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" class="img-responsive">
+        </div>
+        <div class="col-sm-8">
+
+            <h1>{{ product.name }}</h1>
+            <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
+            <p class="price">{{ product.price }} руб.</p>
+            <form action="{% url "cart:CartAdd" product.id %}" method="post">
+                {{ cart_product_form }}
+                {% csrf_token %}
+                <input type="submit" value="Добавить в корзину">
+            </form>
+            <span>
+                {{ product.description | linebreaks}}
+            </span>
+            {% load disqus_tags %}
+            {% disqus_show_comments %}
+        </div>
+
+        <div>
+        <h3>Похожие товары</h3>
+            {% if recommendation.count == 0 %}
+                <p>Ничего подобного больше не найдено. Этот товар неповторим!</p>
+            {% else %}
+
+                <ul>
+                    {% for r in recommendation %}
+                        <li>
+                            <div class="col-sm-2">
+                                <img src="{% if r.image %}{{ r.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" class="img-responsive">
+                            </div>
+                            <a href="{{ r.get_absolute_url }}">{{ r.name }}</a>
+                        </li>
+                        <br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

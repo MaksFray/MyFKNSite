@@ -1,0 +1,55 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Redact info{% endblock %}
+
+{% block content %}
+  
+  <h2>Profile </h2>
+
+  {% for field in form %}
+    {{field.error}}
+  {% endfor %}
+
+  <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+
+             <label >Avatar:</label>
+            <div class="fieldWrapper">
+                {{ form.image }}{{ form.image_file }}
+                <img src="{{ form.image.url }}" class="img-responsive">
+            </div>
+
+            <label >Lastname:</label>
+            <div class="fieldWrapper">
+                {{ form.last_name }}
+            </div>
+
+            <label>Firstname:</label>
+            <div class="fieldWrapper">
+                {{ form.first_name }}
+            </div>
+
+            <label>Middlename:</label>
+            <div class="fieldWrapper">
+                {{ form.mid_name }}
+            </div>
+
+            <label>Phone:</label>
+            <div class="fieldWrapper">
+                {{ form.phone_number }}
+            </div>
+
+            <label>information:</label>
+            <div class="fieldWrapper">
+                {{ form.about }}
+            </div>
+
+            <label>Email:</label>
+            <div class="fieldWrapper">
+                {{ form.email }}
+            </div>
+
+  <input class="save btn btn-default" type="submit" value="Update" />
+  </form>
+
+{% endblock %}
